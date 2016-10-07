@@ -1,13 +1,15 @@
 <?php
-require('pass.php');
+include('pass.php');
+include('defaults.php');
+
 try {
-    $dbh = new PDO('mysql:host=mysql3.mydevil.net;dbname=m1515_czmk', $user, $pass);
-    $res = $dbh->query('SELECT SUM(val) from votes WHERE date > NOW() - INTERVAL 1 HOUR');
-	print_r($res);
-    $dbh = null;
+	include('dbconnect.php');
+  $res = $dbh->query('SELECT SUM(val) as sum,(SELECT val FROM votes ORDER BY `date` DESC LIMIT 1) as last_vote from votes WHERE date > NOW() - INTERVAL 1 HOUR');
+  print_r($res->fetchObject());
+  $dbh = null;
 } catch (PDOException $e) {
-    print "Error!: " . $e->getMessage() . "<br/>";
-    die();
+  print "Error!: " . $e->getMessage() . "<br/>";
+  die();
 }
 
 ?>

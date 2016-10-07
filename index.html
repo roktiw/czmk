@@ -1,0 +1,39 @@
+<html>                                                               
+<body>
+<h1>
+<span id="wynik"></span>
+</h1> 
+
+Ostatnie zgłoszenie:<br>
+<span id="last_update"></span>
+z: <span id="timestamp"></span>
+
+<script>
+function _update(id, val){
+  var el = document.getElementById(id);
+  el.innerHTML = val;
+} 
+
+var request = new XMLHttpRequest();
+request.open('GET', '//evil1.org/czmk/czmk.php');
+request.onload = function() {
+  if (request.status >= 200 && request.status < 400) {
+    var data = JSON.parse(request.responseText);
+    _update('last_update', data.val == 1 ? 'Tak' : 'Nie');
+    _update('timestamp', data.date);
+    _update('wynik', data.sum == '1' ? 'Tak' : 'Nie');
+  } else {
+    _update('status', "Błąd: " + request.status + " " + request.responseText)
+  } 
+};
+
+request.onerror = function() {
+  _update('status', 'Błąd'); 
+};
+
+request.send();
+</script>
+</div>
+</body>
+</html>
+
