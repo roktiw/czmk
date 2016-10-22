@@ -1,51 +1,50 @@
-<html>                                                               
+<html>
+
 <body>
-<h1>
+    <h1>
 <span id="wynik"></span>
-</h1> 
-
-<a href="//evil1.org/czmk/vote.php?val=1">Tak, kursuje</a><br>
-<a href="//evil1.org/czmk/vote.php?val=-1">Nie, nie kursuje</a><br>
-
-Ostatnie zgłoszenie:<br>
-<span id="last_update"></span>
-z: <span id="timestamp"></span>
-
-<script>
-function _update(id, val){
-  var el = document.getElementById(id);
-  el.innerHTML = val;
-} 
-
-var request = new XMLHttpRequest();
-request.open('GET', '//evil1.org/czmk/czmk.php');
-request.onload = function() {
-  if (request.status >= 200 && request.status < 400) {
-    var data = JSON.parse(request.responseText);
-    _update('last_update', data.val == 1 ? 'Tak' : 'Nie');
-    _update('timestamp', data.date);
-    
-    var czy = 'Co z tym metrem';
-    if (data.sum > 0) {
-      czy = "Tak";    
-    } else if (parseInt(data.sum) <= 0){
-      czy = "Nie"
-    } else {
-      czy = "Nikt ostatnio nie zgłaszał awarii";
+</h1>
+    <a href="//czmk.azurewebsites.net/czmk/vote.php?val=1">Tak, kursuje</a>
+    <br>
+    <a href="//czmk.azurewebsites.net/vote.php?val=-1">Nie, nie kursuje</a>
+    <br> Ostatnie zgłoszenie:
+    <br>
+    <span id="last_update"></span> z: <span id="timestamp"></span>
+    <script>
+    function _update(id, val) {
+        var el = document.getElementById(id);
+        el.innerHTML = val;
     }
-    _update('wynik', czy);
-  } else {
-    _update('status', "Błąd: " + request.status + " " + request.responseText)
-  } 
-};
 
-request.onerror = function() {
-  _update('status', 'Błąd'); 
-};
+    var request = new XMLHttpRequest();
+    request.open('GET', '//czmk.azurewebsites.net/czmk/czmk.php');
+    request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+            var data = JSON.parse(request.responseText);
+            _update('last_update', data.val == 1 ? 'Tak' : 'Nie');
+            _update('timestamp', data.date);
 
-request.send();
-</script>
-</div>
+            var czy = 'Co z tym metrem';
+            if (data.sum > 0) {
+                czy = "Tak";
+            } else if (parseInt(data.sum) <= 0) {
+                czy = "Nie"
+            } else {
+                czy = "Nikt ostatnio nie zgłaszał awarii";
+            }
+            _update('wynik', czy);
+        } else {
+            _update('status', "Błąd: " + request.status + " " + request.responseText)
+        }
+    };
+
+    request.onerror = function() {
+        _update('status', 'Błąd');
+    };
+
+    request.send();
+    </script>
+    </div>
 </body>
-</html>
 
+</html>
