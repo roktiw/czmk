@@ -5,7 +5,7 @@
 </h1> 
 
 <a href="//evil1.org/czmk/vote.php?val=1">Tak, kursuje</a><br>
-<a href="//evil1.org/czmk/vote.php?val=-1">Nie kursuje</a><br>
+<a href="//evil1.org/czmk/vote.php?val=-1">Nie, nie kursuje</a><br>
 
 Ostatnie zgłoszenie:<br>
 <span id="last_update"></span>
@@ -25,7 +25,7 @@ request.onload = function() {
     _update('last_update', data.val == 1 ? 'Tak' : 'Nie');
     _update('timestamp', data.date);
     
-    var czy = 'Chuj wie';
+    var czy = 'Co z tym metrem';
     if (data.sum > 0) {
       czy = "Tak";    
     } else if (parseInt(data.sum) <= 0){

@@ -10,9 +10,15 @@ try {
   $q->bindParam("user", $user);                                              
   $q->bindParam("val", $val);                                                
   $res = $q->execute();                                                      
+
+  header("Location: http://maciejjankowski.com/czy-metro-kursuje/");
+
                                                                              
   print_r($res);                                                             
-  $dbh = null;                                                               
+  $dbh = null;
+  
+  die();
+
 } catch (PDOException $e) {                                                  
   print "Error!: " . $e->getMessage() . "<br/>";                             
   die();                                                                     
